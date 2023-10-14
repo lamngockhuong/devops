@@ -32,7 +32,7 @@ if [ "$pullLatest" = "y" ] || [ "$pullLatest" = "Y" ]; then
         exit 1
     fi
 
-    # Checkout về branch và pull source mới nhất
+    # checkout & pull new source code
     git checkout "$branch"
     git pull origin "$branch"
 else
