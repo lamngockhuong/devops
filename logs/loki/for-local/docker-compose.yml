@@ -1,0 +1,40 @@
+version: '3'
+
+networks:
+  monitor:
+    driver: bridge
+
+services:
+  loki:
+    image: grafana/loki:2.9.1
+    container_name: loki
+    restart: unless-stopped
+    ports:
+      - ${LOKI_PORT}:3100
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/config.yaml
+    networks:
+      - monitor
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - ${GRAFANA_PORT}:3000
+    volumes:
+      - $PWD/grafana:/var/lib/grafana
+    networks:
+      - monitor
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    restart: unless-stopped
+    volumes:
+      - ./logs:/var/log
+      - ./promtial-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - monitor
