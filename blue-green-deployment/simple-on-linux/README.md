@@ -1,4 +1,10 @@
-# Blue Green Deployment
+# Blue Green Deployment Usage Guide
+
+## Introduction
+
+- Service log path: `/var/log/example-web` (configurate at create-systemd-service.sh)
+
+## Getting Started
 
 Create the systemd service:
 
