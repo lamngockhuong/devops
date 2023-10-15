@@ -11,8 +11,8 @@ User=deploy
 ExecStart=/usr/bin/java -jar /home/deploy/app/app-blue.jar --server.port=8080 --spring.profiles.active=dev
 SuccessExitStatus=143
 
-StandardOutput=append:/home/deploy/log/app-blue.log
-StandardError=append:/home/deploy/log/app-blue.error.log
+StandardOutput=append:/var/log/example-web/access-blue.log
+StandardError=append:/var/log/example-web/error-blue.log
 
 [Install]
 WantedBy=multi-user.target
@@ -29,8 +29,8 @@ User=deploy
 ExecStart=/usr/bin/java -jar /home/deploy/app/app-green.jar --server.port=8081 --spring.profiles.active=dev
 SuccessExitStatus=143
 
-StandardOutput=append:/home/deploy/log/app-green.log
-StandardError=append:/home/deploy/log/app-green.error.log
+StandardOutput=append:/var/log/example-web/access-green.log
+StandardError=append:/var/log/example-web/error-green.log
 
 [Install]
 WantedBy=multi-user.target
