@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# create log path & grant the permission
+log_path="/var/log/example-web"
+mkdir -p $log_path
+chown "$USER:$USER" $log_path
+
 # example-web-blue.service
 cat > /etc/systemd/system/example-web-blue.service << EOF
 [Unit]
@@ -11,8 +16,8 @@ User=deploy
 ExecStart=/usr/bin/java -jar /home/deploy/app/app-blue.jar --server.port=8080 --spring.profiles.active=dev
 SuccessExitStatus=143
 
-StandardOutput=append:/var/log/example-web/access-blue.log
-StandardError=append:/var/log/example-web/error-blue.log
+StandardOutput=append:$log_path/access-blue.log
+StandardError=append:$log_path/error-blue.log
 
 [Install]
 WantedBy=multi-user.target
@@ -29,8 +34,8 @@ User=deploy
 ExecStart=/usr/bin/java -jar /home/deploy/app/app-green.jar --server.port=8081 --spring.profiles.active=dev
 SuccessExitStatus=143
 
-StandardOutput=append:/var/log/example-web/access-green.log
-StandardError=append:/var/log/example-web/error-green.log
+StandardOutput=append:$log_path/access-green.log
+StandardError=append:$log_path/error-green.log
 
 [Install]
 WantedBy=multi-user.target
