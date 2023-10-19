@@ -32,15 +32,14 @@ if [ "$pullLatest" = "y" ] || [ "$pullLatest" = "Y" ]; then
         exit 1
     fi
 
-    # checkout & pull new source code
+    # checkout, pull new source code & build jar file when pull the source code successfully
     git checkout "$branch"
-    git pull origin "$branch"
+    git pull origin "$branch" && sh gradlew build -x test
 else
     echo "You have chosen not to pull the latest source code."
+    # build jar file
+    sh gradlew build -x test
 fi
-
-# build jar file
-./gradlew build -x test
 
 if [ -f "$jar_filepath" ]; then
   echo "🔎 Jar file found: $jar_filepath"
